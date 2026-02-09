@@ -6,7 +6,7 @@
 
 Silahkan setup project aplikasi kamu:
 
-- [ ] Pilih tema sesuai kesepakatan bersama  instructor, tuliskan dalam README github kamu
+- [x] Pilih tema sesuai kesepakatan bersama  instructor, tuliskan dalam README github kamu
 - [ ] Membuat layout aplikasi sesuai tema yang dipilih
 - [ ] Membuat initial data/seeder sesuai struktur data yang ditentukan (Kalian bisa check `db.json` sebagai referensi atau bisa digunakan sebagai data awal)
   - [ ] Halaman auth
