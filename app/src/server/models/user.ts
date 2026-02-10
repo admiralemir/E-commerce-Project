@@ -20,7 +20,7 @@ export default class User {
     static async getCollection() {
         const db = await getDb()
 
-        return db.collection('users')
+        return db.collection<IUser>('users')
     }
 
     static async register(body: IUser) {
@@ -36,8 +36,8 @@ export default class User {
         return "User registered successfully"
     }
 
-    static async login(body: { username: string, password: string }) {
+    static async login(body: { email: string, password: string }) {
         const collection = await this.getCollection()
-
+        
     }
 }

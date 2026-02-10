@@ -109,13 +109,7 @@ export default function Home() {
             </div>
             <div className="relative h-[400px] md:h-[500px]">
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-lg">
-                {/* <Image
-                src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&h=1000&fit=crop"
-                alt="Fashion Banner"
-                fill
-                className="object-cover rounded-lg"
-                priority
-              /> */}
+                {/* TARUH FOTO DISINI */}
               </div>
             </div>
           </div>
@@ -234,11 +228,7 @@ export default function Home() {
                 className="group"
               >
                 <div className="relative aspect-square mb-4 overflow-hidden bg-gray-100">
-                  {/* <img
-                    src={product.thumbnail}
-                    alt={product.name}
-                    className="object-cover group-hover:scale-110 transition-transform duration-300"
-                  /> */}
+                  {/* TARUH FOTO DISINI */}
                   <div className="absolute top-3 left-3 px-3 py-1 bg-black text-white text-xs font-semibold uppercase">
                     {product.tag}
                   </div>
