@@ -1,8 +1,12 @@
 import '../globals.css';
 import Link from 'next/link';
 import Image from 'next/image';
+import { IProduct } from '@/types/product-type';
 
-export default function Home() {
+export default async function Home() {
+  const resp = await fetch('http://localhost:3000/api/products')
+    const data: IProduct[] = await resp.json()
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('id-ID', {
       style: 'currency',
@@ -10,73 +14,6 @@ export default function Home() {
       minimumFractionDigits: 0,
     }).format(price);
   }
-
-  const featuredProducts = [
-    {
-      name: 'Classic White Sneakers',
-      slug: 'classic-white-sneakers',
-      excerpt: 'Comfortable and stylish everyday shoes',
-      price: 899000,
-      thumbnail: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=400&fit=crop',
-      tag: 'New',
-    },
-    {
-      name: 'Leather Crossbody Bag',
-      slug: 'leather-crossbody-bag',
-      excerpt: 'Premium leather with modern design',
-      price: 1250000,
-      thumbnail: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=400&h=400&fit=crop',
-      tag: 'Trending',
-    },
-    {
-      name: 'Cotton Oversized T-Shirt',
-      slug: 'cotton-oversized-tshirt',
-      excerpt: 'Soft cotton blend for maximum comfort',
-      price: 299000,
-      thumbnail: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop',
-      tag: 'Sale',
-    },
-    {
-      name: 'Slim Fit Denim Jeans',
-      slug: 'slim-fit-denim-jeans',
-      excerpt: 'Classic blue denim with perfect fit',
-      price: 599000,
-      thumbnail: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=400&fit=crop',
-      tag: 'Popular',
-    },
-    {
-      name: 'Minimalist Watch',
-      slug: 'minimalist-watch',
-      excerpt: 'Elegant timepiece for any occasion',
-      price: 1899000,
-      thumbnail: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop',
-      tag: 'New',
-    },
-    {
-      name: 'Wireless Headphones',
-      slug: 'wireless-headphones',
-      excerpt: 'Premium sound quality and comfort',
-      price: 2499000,
-      thumbnail: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop',
-      tag: 'Featured',
-    },
-    {
-      name: 'Sports Running Shoes',
-      slug: 'sports-running-shoes',
-      excerpt: 'Lightweight and breathable design',
-      price: 1199000,
-      thumbnail: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop',
-      tag: 'Sale',
-    },
-    {
-      name: 'Designer Sunglasses',
-      slug: 'designer-sunglasses',
-      excerpt: 'UV protection with style',
-      price: 799000,
-      thumbnail: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=400&fit=crop',
-      tag: 'New',
-    },
-  ]
 
   return (
     <div className="bg-white text-black">
@@ -221,16 +158,20 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {featuredProducts.map((product) => (
+            {data.slice(0, 8).map(product => (
               <Link
                 key={product.slug}
                 href={`/products/${product.slug}`}
                 className="group"
               >
                 <div className="relative aspect-square mb-4 overflow-hidden bg-gray-100">
-                  {/* TARUH FOTO DISINI */}
+                  <img
+                    src={product.thumbnail}
+                    alt={product.name}
+                    className="object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
                   <div className="absolute top-3 left-3 px-3 py-1 bg-black text-white text-xs font-semibold uppercase">
-                    {product.tag}
+                    {product.tags}
                   </div>
                   <button className="absolute top-3 right-3 w-10 h-10 bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg hover:bg-black hover:text-white">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
