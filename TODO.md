@@ -15,9 +15,9 @@ Silahkan setup project aplikasi kamu:
   - [x] Halaman home
     - [x] Komponen Banner
     - [x] Komponen Detail info Ecommerce
-    - [ ] Komponen Featured Product (50-10 product) + “see-all”
-  - [ ] Halaman product
-    - [ ] Komponen List Product
+    - [x] Komponen Featured Product (50-10 product) + “see-all”
+  - [x] Halaman product
+    - [x] Komponen List Product
     - [ ] Komponen Search
     - [ ] Komponen Pagination
     - [ ] Komponen Add to wishlist
