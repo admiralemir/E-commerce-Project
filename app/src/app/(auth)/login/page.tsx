@@ -11,7 +11,7 @@ export default function LoginPage() {
                     </h1>
                 </div>
 
-                <form className="mt-8 space-y-5">
+                <form className="mt-8 space-y-5" action={'/'}>
 
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
@@ -21,7 +21,7 @@ export default function LoginPage() {
                             id="email"
                             name="email"
                             type="email"
-                            required
+                            // required
                             // value={formData.email}
                             // onChange={handleChange}
                             className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all"
@@ -37,7 +37,7 @@ export default function LoginPage() {
                             id="password"
                             name="password"
                             type="password"
-                            required
+                            // required
                             // value={formData.password}
                             // onChange={handleChange}
                             className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all"

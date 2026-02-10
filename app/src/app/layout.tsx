@@ -29,10 +29,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <nav>
-          <Link href={"/register"}>/REGISTER</Link>
-          <Link href={"/login"}>/LOGIN</Link>
-          <Link href={"/"}>/HOME</Link>
-          <Link href={"/products"}>/PRODUCT</Link>
+          {/* <Link href={"/register"}>/REGISTER</Link>
+          <Link href={"/login"}>/LOGIN</Link> */}
         </nav>
         {children}
       </body>

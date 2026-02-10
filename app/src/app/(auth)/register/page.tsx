@@ -23,7 +23,7 @@ export default function RegisterPage() {
                             id="name"
                             name="name"
                             type="text"
-                            required
+                            // required
                             // value={formData.name}
                             // onChange={handleChange}
                             className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all"
@@ -39,7 +39,7 @@ export default function RegisterPage() {
                             id="username"
                             name="username"
                             type="text"
-                            required
+                            // required
                             // value={formData.username}
                             // onChange={handleChange}
                             className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all"
@@ -55,7 +55,7 @@ export default function RegisterPage() {
                             id="email"
                             name="email"
                             type="email"
-                            required
+                            // required
                             // value={formData.email}
                             // onChange={handleChange}
                             className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all"
@@ -71,7 +71,7 @@ export default function RegisterPage() {
                             id="password"
                             name="password"
                             type="password"
-                            required
+                            // required
                             // value={formData.password}
                             // onChange={handleChange}
                             className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all"
@@ -87,7 +87,7 @@ export default function RegisterPage() {
                             id="terms"
                             name="terms"
                             type="checkbox"
-                            required
+                            // required
                             className="h-4 w-4 mt-1 text-black focus:ring-black border-gray-300 cursor-pointer"
                         />
                         <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">

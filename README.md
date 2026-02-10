@@ -23,12 +23,12 @@ Pada challenge ini, kamu diminta untuk membuat aplikasi client-server dengan det
 
 ### Halaman
 
-- [ ] Halaman Register
-- [ ] Halaman Login
-- [ ] Halaman Home
-  - [ ] Banner Promo
-  - [ ] Detail info Ecommerce
-  - [ ] Featured Product (5-10 product) + “see-all”
+- [x] Halaman Register
+- [x] Halaman Login
+- [x] Halaman Home
+  - [x] Banner Promo
+  - [x] Detail info Ecommerce
+  - [x] Featured Product (5-10 product) + “see-all”
 - [ ] Halaman Product
 - [ ] List Product
   - [ ] Fitur Search

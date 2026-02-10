@@ -1,4 +1,5 @@
 import { ReactNode } from "react"
+import Link from "next/link"
 
 interface IProps {
     children: ReactNode
@@ -7,7 +8,8 @@ interface IProps {
 export default function HomeLayout(props: IProps) {
     return (
         <div>
-            <h1>Home Layout</h1>
+            {/* <Link href="/">Home</Link>
+            <Link href="/products">Products</Link> */}
             {props.children}
         </div>
     )
