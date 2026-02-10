@@ -79,7 +79,7 @@ export default function Home() {
   ]
 
   return (
-    <div>
+    <div className="bg-white text-black">
       <section className="relative bg-white text-black">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 items-center py-16 md:py-24">
