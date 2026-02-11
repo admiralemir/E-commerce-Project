@@ -1,6 +1,14 @@
 import { IProduct } from '@/types/product-type';
+import { Metadata } from 'next';
 import Image from 'next/image'
 import Link from 'next/link'
+import { title } from 'process';
+
+export const metadata: Metadata = {
+    title: 'Products - My E-commerce Store',
+    description: 'Browse our wide selection of products and find the perfect items for you.',
+    
+}
 
 export default async function ProductsPage() {
     const resp = await fetch('http://localhost:3000/api/products')
