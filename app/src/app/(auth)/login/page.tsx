@@ -1,6 +1,36 @@
+"use client"
 import Link from "next/link"
+import { useRouter } from "next/router"
+import { FormEvent, useState } from "react"
 
 export default function LoginPage() {
+    const [email, setEmail] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
+    const router = useRouter()
+
+    async function handleLogin(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault()
+
+        const payload = {
+            email,
+            password
+        }
+
+        const resp = await fetch('http://localhost:3000/api/login', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+
+        const data = await resp.json()
+
+        if (!resp.ok) {
+            alert(data.message)
+            return
+        }
+    } 
     return (
         <div className="min-h-screen bg-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">

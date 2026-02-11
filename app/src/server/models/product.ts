@@ -1,19 +1,7 @@
 import z from 'zod'
 import { getDb } from '../config/mongodb'
 import { ObjectId } from 'mongodb'
-
-type IProduct = {
-    name: string
-    slug: string
-    description: string
-    excerpt: string
-    price: number
-    tags: string[]
-    thumbnail: string
-    images: string[]
-    createdAt: Date
-    updatedAt: Date
-}
+import { IProduct } from '@/types/product-type'
 
 const productSchema = z.object({
     name: z.string(),
