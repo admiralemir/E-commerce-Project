@@ -2,7 +2,6 @@ import { IProduct } from '@/types/product-type';
 import { Metadata } from 'next';
 import Image from 'next/image'
 import Link from 'next/link'
-import { title } from 'process';
 
 export const metadata: Metadata = {
     title: 'Products - My E-commerce Store',
@@ -11,7 +10,10 @@ export const metadata: Metadata = {
 }
 
 export default async function ProductsPage() {
-    const resp = await fetch('http://localhost:3000/api/products')
+    const resp = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products`)
+    if (!resp.ok) {
+        return <div>Error loading products</div>
+    }
     const data: IProduct[] = await resp.json()
 
     const formatPrice = (price: number) => {

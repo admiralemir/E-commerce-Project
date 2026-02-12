@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import { FormEvent, useState } from "react"
 
 export default function LoginPage() {
@@ -16,7 +16,7 @@ export default function LoginPage() {
             password
         }
 
-        const resp = await fetch('http://localhost:3000/api/login', {
+        const resp = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/login`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

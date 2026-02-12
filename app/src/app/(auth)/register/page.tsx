@@ -16,7 +16,7 @@ export default async function RegisterPage(props: IProps) {
         const email = formData.get('email')
         const password = formData.get('password')
 
-        const resp = await fetch('http://localhost:3000/api/register', {
+        const resp = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/register`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"

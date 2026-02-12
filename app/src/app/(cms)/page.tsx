@@ -4,7 +4,10 @@ import Image from 'next/image';
 import { IProduct } from '@/types/product-type';
 
 export default async function Home() {
-  const resp = await fetch('http://localhost:3000/api/products')
+  const resp = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products`)
+  if (!resp.ok) {
+    return <div>Error loading products</div>
+  }
     const data: IProduct[] = await resp.json()
 
   const formatPrice = (price: number) => {
