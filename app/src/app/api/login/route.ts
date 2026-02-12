@@ -14,6 +14,8 @@ export async function POST(req: Request) {
             value: token,
             maxAge: 60 * 60 * 24
         })
+
+        return Response.json({ message: "Login successful" }, { status: 200 })
         
     } catch (error: unknown) {
         if (error instanceof ErrorHandler) {

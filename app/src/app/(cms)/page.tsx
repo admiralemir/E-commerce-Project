@@ -1,6 +1,5 @@
 import '../globals.css';
 import Link from 'next/link';
-import Image from 'next/image';
 import { IProduct } from '@/types/product-type';
 
 export default async function Home() {
@@ -49,7 +48,7 @@ export default async function Home() {
             </div>
             <div className="relative h-[400px] md:h-[500px]">
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-lg">
-                {/* TARUH FOTO DISINI */}
+                {/* TARUH FOTO DISINI UNTUK BANNER */}
               </div>
             </div>
           </div>

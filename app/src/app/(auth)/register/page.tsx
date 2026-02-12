@@ -94,7 +94,7 @@ export default async function RegisterPage(props: IProps) {
                             placeholder="Create a password"
                         />
                         <p className="mt-1 text-xs text-gray-500">
-                            Minimum 8 characters
+                            Minimum 6 characters
                         </p>
                     </div>
 

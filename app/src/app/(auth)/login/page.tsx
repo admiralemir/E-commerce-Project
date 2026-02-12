@@ -2,6 +2,7 @@
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { FormEvent, useState } from "react"
+import Swal from "sweetalert2"
 
 export default function LoginPage() {
     const [email, setEmail] = useState<string>('')
@@ -25,12 +26,19 @@ export default function LoginPage() {
         })
 
         const data = await resp.json()
-
+        console.log(data, '<<<<<<<<<<<<<<<<<<');
+        
         if (!resp.ok) {
-            alert(data.message)
+            Swal.fire({
+                icon: 'error',
+                title: 'Login Failed',
+                text: data.message,
+            })
             return
+        } else {
+            router.push('/')
         }
-    } 
+    }
     return (
         <div className="min-h-screen bg-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
@@ -41,19 +49,17 @@ export default function LoginPage() {
                     </h1>
                 </div>
 
-                <form className="mt-8 space-y-5" action={'/'}>
+                <form className="mt-8 space-y-5" onSubmit={handleLogin}>
 
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                             Email Address *
                         </label>
                         <input
-                            id="email"
                             name="email"
                             type="email"
-                            // required
-                            // value={formData.email}
-                            // onChange={handleChange}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all"
                             placeholder="Enter your email"
                         />
@@ -64,17 +70,15 @@ export default function LoginPage() {
                             Password *
                         </label>
                         <input
-                            id="password"
                             name="password"
                             type="password"
-                            // required
-                            // value={formData.password}
-                            // onChange={handleChange}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all"
                             placeholder="Enter your password"
                         />
                         <p className="mt-1 text-xs text-gray-500">
-                            Minimum 8 characters
+                            Minimum 6 characters
                         </p>
                     </div>
 

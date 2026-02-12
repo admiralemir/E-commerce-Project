@@ -54,6 +54,6 @@ export default class User {
 
         const token = signToken({ _id: user._id, email: user.email })
 
-        return 'Login successful'
+        return token
     }
 }
