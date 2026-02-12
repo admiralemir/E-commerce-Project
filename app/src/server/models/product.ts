@@ -30,12 +30,10 @@ export default class Product {
         return products
     }
 
-    static async getProductById(id: string) {
+    static async getProductBySlug(slug: string) {
         const collection = await this.getCollection()
 
-        const _id = new ObjectId(id)
-        const product = await collection.findOne({ _id })
-
+        const product = await collection.findOne({ slug })
         return product
     }
 }
