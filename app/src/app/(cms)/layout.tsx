@@ -1,5 +1,6 @@
 import { ReactNode } from "react"
 import Link from "next/link"
+import Navbar from "@/components/navbar"
 
 interface IProps {
     children: ReactNode
