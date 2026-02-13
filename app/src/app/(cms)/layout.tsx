@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 import Link from "next/link"
-import Navbar from "@/components/navbar"
+import { ShoppingBag, User } from "lucide-react"
 
 interface IProps {
     children: ReactNode
@@ -9,8 +9,20 @@ interface IProps {
 export default function HomeLayout(props: IProps) {
     return (
         <div>
-            {/* <Link href="/">Home</Link>
-            <Link href="/products">Products</Link> */}
+            <nav className="w-full border-b border-gray-200 bg-white">
+                <div className="max-w-7xl mx-auto px-6">
+
+                    <div className="flex items-center justify-between h-16">
+                        <Link href="/" className="text-2xl font-bold tracking-widest">
+                            ZALORKUY
+                        </Link>
+                        <div className="flex items-center space-x-5">
+                            <User className="w-5 h-5 cursor-pointer hover:text-gray-600 transition" />
+                            <ShoppingBag className="w-5 h-5 cursor-pointer hover:text-gray-600 transition" />
+                        </div>
+                    </div>
+                </div>
+            </nav>
             {props.children}
         </div>
     )

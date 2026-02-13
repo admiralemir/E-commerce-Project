@@ -1,7 +1,6 @@
 import '../globals.css';
 import Link from 'next/link';
 import { IProduct } from '@/types/product-type';
-import Navbar from '@/components/navbar';
 
 export default async function Home() {
   const resp = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products`)
@@ -20,7 +19,6 @@ export default async function Home() {
 
   return (
     <div className="bg-white text-black">
-      <Navbar />
       <section className="relative bg-white text-black">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 items-center py-16 md:py-24">
