@@ -21,7 +21,7 @@ Silahkan setup project aplikasi kamu:
     - [ ] Komponen Search
     - [ ] Komponen Pagination
     - [ ] Komponen Add to wishlist
-  - [ ] Halaman detail product
+  - [x] Halaman detail product
     - [ ] Komponen Add to wishlist
   - [ ] Halaman Wishlist
     - [ ] Komponen list Wishlist (bisa menggunakan card yang sama dengan halaman list product)
@@ -31,17 +31,17 @@ Silahkan setup project aplikasi kamu:
 
 ### NEXT.js Intro
 
-- [ ] Setup NEXT.js project yang menggunakan typescript
+- [x] Setup NEXT.js project yang menggunakan typescript
 - [ ] Convert halaman-halaman dan komponen-komponen yang dibuat sebelumnya menjadi  pages dan components pada NEXT.js:
-  - [ ] Halaman register: /register
-  - [ ] Halaman login: /login
-  - [ ] Halaman home: /
-    - [ ] Komponen Banner
-    - [ ] Komponen Detail info Ecommerce
-    - [ ] Komponen Featured Product (5-10 product) + “see-all”
-  - [ ] Halaman product: /products
-    - [ ] Komponen List Product
-    - [ ] Komponen Search
+  - [x] Halaman register: /register
+  - [x] Halaman login: /login
+  - [x] Halaman home: /
+    - [x] Komponen Banner
+    - [x] Komponen Detail info Ecommerce
+    - [x] Komponen Featured Product (5-10 product) + “see-all”
+  - [x] Halaman product: /products
+    - [x] Komponen List Product
+    - [x] Komponen Search
     - [ ] Komponent Pagination
     - [ ] Komponen Add to wishlist
   - [ ] Halaman detail product: /products/:slug

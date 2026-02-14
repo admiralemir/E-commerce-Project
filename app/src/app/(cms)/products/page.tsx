@@ -1,6 +1,6 @@
+'use client'
 import { IProduct } from '@/types/product-type';
-import { Metadata } from 'next';
-import Image from 'next/image'
+import { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
