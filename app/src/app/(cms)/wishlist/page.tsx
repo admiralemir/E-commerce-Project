@@ -61,6 +61,5 @@ export default async function WishlistPage() {
         } finally {
             setRemovingId('')
         }
-
     }
 }

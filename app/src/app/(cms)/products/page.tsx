@@ -2,6 +2,7 @@
 import { IProduct } from '@/types/product-type';
 import { Metadata } from 'next'
 import Link from 'next/link'
+import { useState } from 'react';
 
 export const metadata: Metadata = {
     title: 'Products - My E-commerce Store',
@@ -10,6 +11,8 @@ export const metadata: Metadata = {
 }
 
 export default async function ProductsPage() {
+    const [wishlist, setWishlist] = useState<string[]>([])
+
     const resp = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products`)
     if (!resp.ok) {
         return <div>Error loading products</div>
@@ -23,6 +26,40 @@ export default async function ProductsPage() {
             minimumFractionDigits: 0,
         }).format(price);
     };
+
+    async function fetchWishlist() {
+        try {
+            const resp = await fetch('/api/wishlist')
+            if (resp.ok) {
+                const data = await resp.json()
+                const wishlistIds = data.map((item: { productId: string }) => item.productId)
+                setWishlist(wishlistIds)
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function toggleWishlist(productId: string) {
+        try {
+            const resp = await fetch('/api/wishlist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ productId }),
+            })
+
+            if (resp.ok) {
+                fetchWishlist()
+            } else {
+                throw new Error('Failed to update wishlist')
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <div className="bg-white min-h-screen">
