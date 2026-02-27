@@ -16,9 +16,23 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
     if (savedWishlist) {
       setWishlist(JSON.parse(savedWishlist));
     }
+
+    // Listen untuk perubahan wishlist dari tab/window lain
+    const handleStorageChange = () => {
+      const savedWishlist = localStorage.getItem('wishlist');
+      if (savedWishlist) {
+        setWishlist(JSON.parse(savedWishlist));
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
-  const toggleWishlist = (productSlug: string) => {
+  const toggleWishlist = (productSlug: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
     const isInWishlist = wishlist.includes(productSlug);
     let newWishlist: string[];
 
@@ -30,6 +44,9 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
 
     setWishlist(newWishlist);
     localStorage.setItem('wishlist', JSON.stringify(newWishlist));
+    
+    // Dispatch event untuk update components lain
+    window.dispatchEvent(new Event('wishlistUpdate'));
   };
 
   const formatPrice = (price: number) => {
@@ -56,19 +73,31 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
               </div>
             </div>
           </Link>
+          
           <button 
-            onClick={() => toggleWishlist(product.slug)}
+            onClick={(e) => toggleWishlist(product.slug, e)}
             className="absolute top-3 right-3 w-10 h-10 bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg hover:bg-black hover:text-white z-10"
+            aria-label={wishlist.includes(product.slug) ? 'Remove from wishlist' : 'Add to wishlist'}
           >
             <svg 
-              className={`w-5 h-5 ${wishlist.includes(product.slug) ? 'fill-red-500 text-red-500' : ''}`}
+              className={`w-5 h-5 transition-colors ${
+                wishlist.includes(product.slug) 
+                  ? 'fill-red-500 text-red-500' 
+                  : 'fill-none'
+              }`}
               fill={wishlist.includes(product.slug) ? 'currentColor' : 'none'}
               stroke="currentColor" 
               viewBox="0 0 24 24"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" 
+              />
             </svg>
           </button>
+          
           <Link href={`/products/${product.slug}`}>
             <h3 className="font-semibold text-sm mb-1 line-clamp-2 group-hover:underline">
               {product.name}

@@ -1,29 +1,36 @@
-import { ReactNode } from "react"
-import Link from "next/link"
-import { ShoppingBag, User } from "lucide-react"
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "../globals.css";
+import Navbar from "@/components/NavbarComponent";
 
-interface IProps {
-    children: ReactNode
-}
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
 
-export default function HomeLayout(props: IProps) {
-    return (
-        <div>
-            <nav className="w-full border-b border-gray-200 bg-white">
-                <div className="max-w-7xl mx-auto px-6">
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
-                    <div className="flex items-center justify-between h-16">
-                        <Link href="/" className="text-2xl font-bold tracking-widest">
-                            AROLAZ
-                        </Link>
-                        <div className="flex items-center space-x-5">
-                            <User className="w-5 h-5 cursor-pointer hover:text-gray-600 transition" />
-                            <ShoppingBag className="w-5 h-5 cursor-pointer hover:text-gray-600 transition" />
-                        </div>
-                    </div>
-                </div>
-            </nav>
-            {props.children}
-        </div>
-    )
+export const metadata: Metadata = {
+  title: "E-Shop - Your Fashion Destination",
+  description: "Discover the latest fashion trends and timeless classics",
+};
+
+export default function CMSLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <Navbar />
+        {children}
+      </body>
+    </html>
+  );
 }

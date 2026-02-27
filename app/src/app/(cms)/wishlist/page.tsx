@@ -4,45 +4,60 @@ import { IProduct } from '@/types/product-type';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaTrash, FaShoppingCart } from 'react-icons/fa';
 
 export default function WishlistPage() {
   const [wishlistProducts, setWishlistProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchWishlistProducts() {
-      const savedWishlist = localStorage.getItem('wishlist');
-      if (!savedWishlist) {
-        setLoading(false);
-        return;
-      }
+    fetchWishlistProducts();
 
-      const wishlistSlugs: string[] = JSON.parse(savedWishlist);
-      
-      if (wishlistSlugs.length === 0) {
-        setLoading(false);
-        return;
-      }
+    // Listen untuk perubahan wishlist
+    const handleWishlistUpdate = () => {
+      fetchWishlistProducts();
+    };
 
-      try {
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
-        const resp = await fetch(`${baseUrl}/api/products`);
-        
-        if (resp.ok) {
-          const allProducts: IProduct[] = await resp.json();
-          const filtered = allProducts.filter(p => wishlistSlugs.includes(p.slug));
-          setWishlistProducts(filtered);
-        }
-      } catch (error) {
-        console.error('Error fetching wishlist products:', error);
-      } finally {
-        setLoading(false);
-      }
+    window.addEventListener('storage', handleWishlistUpdate);
+    window.addEventListener('wishlistUpdate', handleWishlistUpdate);
+    
+    return () => {
+      window.removeEventListener('storage', handleWishlistUpdate);
+      window.removeEventListener('wishlistUpdate', handleWishlistUpdate);
+    };
+  }, []);
+
+  async function fetchWishlistProducts() {
+    const savedWishlist = localStorage.getItem('wishlist');
+    if (!savedWishlist) {
+      setLoading(false);
+      return;
     }
 
-    fetchWishlistProducts();
-  }, []);
+    const wishlistSlugs: string[] = JSON.parse(savedWishlist);
+    
+    if (wishlistSlugs.length === 0) {
+      setWishlistProducts([]);
+      setLoading(false);
+      return;
+    }
+
+    try {
+      // FIX: Gunakan relative URL untuk client-side fetch
+      const resp = await fetch('/api/products', {
+        cache: 'no-store'
+      });
+      
+      if (resp.ok) {
+        const allProducts: IProduct[] = await resp.json();
+        const filtered = allProducts.filter(p => wishlistSlugs.includes(p.slug));
+        setWishlistProducts(filtered);
+      }
+    } catch (error) {
+      console.error('Error fetching wishlist products:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   const removeFromWishlist = (slug: string) => {
     const savedWishlist = localStorage.getItem('wishlist');
@@ -51,6 +66,9 @@ export default function WishlistPage() {
       const newWishlist = wishlistSlugs.filter(s => s !== slug);
       localStorage.setItem('wishlist', JSON.stringify(newWishlist));
       setWishlistProducts(prev => prev.filter(p => p.slug !== slug));
+      
+      // Dispatch event untuk update components lain
+      window.dispatchEvent(new Event('wishlistUpdate'));
     }
   };
 
@@ -65,7 +83,10 @@ export default function WishlistPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-xl">Loading wishlist...</div>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-black mx-auto mb-4"></div>
+          <div className="text-xl">Loading wishlist...</div>
+        </div>
       </div>
     );
   }
@@ -74,26 +95,33 @@ export default function WishlistPage() {
     <main className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-bold">My Wishlist</h1>
+          <div>
+            <h1 className="text-3xl font-bold">My Wishlist</h1>
+            <p className="text-gray-600 mt-1">
+              {wishlistProducts.length} {wishlistProducts.length === 1 ? 'item' : 'items'}
+            </p>
+          </div>
           <Link
-            href="/"
-            className="text-blue-600 hover:text-blue-800 flex items-center gap-2"
+            href="/products"
+            className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
           >
-            <FaShoppingCart />
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
             Continue Shopping
           </Link>
         </div>
 
         {wishlistProducts.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-md p-8 text-center">
-            <div className="text-gray-400 text-6xl mb-4">💔</div>
-            <h2 className="text-2xl font-semibold mb-2">Your wishlist is empty</h2>
-            <p className="text-gray-600 mb-6">
-              Start adding products to your wishlist to see them here!
+          <div className="bg-white rounded-lg shadow-md p-12 text-center">
+            <div className="text-gray-300 text-8xl mb-6">♡</div>
+            <h2 className="text-2xl font-semibold mb-3">Your wishlist is empty</h2>
+            <p className="text-gray-600 mb-8 max-w-md mx-auto">
+              Start adding products to your wishlist by clicking the heart icon on products you love!
             </p>
             <Link
-              href="/"
-              className="inline-block bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors"
+              href="/products"
+              className="inline-block bg-black text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition-colors font-semibold"
             >
               Browse Products
             </Link>
@@ -132,7 +160,7 @@ export default function WishlistPage() {
                           {product.tags.map((tag) => (
                             <span
                               key={tag}
-                              className="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full"
+                              className="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full font-medium"
                             >
                               {tag}
                             </span>
@@ -142,28 +170,30 @@ export default function WishlistPage() {
                       
                       <button
                         onClick={() => removeFromWishlist(product.slug)}
-                        className="ml-4 text-red-500 hover:text-red-700 p-2"
+                        className="ml-4 text-gray-400 hover:text-red-500 p-2 transition-colors"
                         aria-label="Remove from wishlist"
                       >
-                        <FaTrash className="text-xl" />
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
                       </button>
                     </div>
                     
-                    <div className="flex justify-between items-center">
-                      <span className="text-2xl font-bold text-blue-600">
+                    <div className="flex justify-between items-center pt-4 border-t border-gray-200">
+                      <span className="text-2xl font-bold text-black">
                         {formatPrice(product.price)}
                       </span>
                       
                       <div className="flex gap-3">
                         <button
                           onClick={() => removeFromWishlist(product.slug)}
-                          className="border border-red-500 text-red-500 px-4 py-2 rounded hover:bg-red-50 transition-colors"
+                          className="border-2 border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors font-semibold"
                         >
                           Remove
                         </button>
                         <Link
                           href={`/products/${product.slug}`}
-                          className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition-colors"
+                          className="bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition-colors font-semibold"
                         >
                           View Details
                         </Link>
