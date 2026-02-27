@@ -1,14 +1,27 @@
-'use client'
 import '../globals.css';
 import Link from 'next/link';
 import { IProduct } from '@/types/product-type';
 
-export default async function Home() {
-  const resp = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products`)
-  if (!resp.ok) {
-    return <div>Error loading products</div>
+async function getProducts(): Promise<IProduct[]> {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const resp = await fetch(`${baseUrl}/api/products`, {
+      cache: 'no-store'
+    });
+    
+    if (!resp.ok) {
+      throw new Error('Failed to fetch products');
+    }
+    
+    return await resp.json();
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    return [];
   }
-    const data: IProduct[] = await resp.json()
+}
+
+export default async function Home() {
+  const data = await getProducts();
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('id-ID', {
@@ -20,6 +33,7 @@ export default async function Home() {
 
   return (
     <div className="bg-white text-black">
+      {/* Hero Section */}
       <section className="relative bg-white text-black">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 items-center py-16 md:py-24">
@@ -56,6 +70,7 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* Categories Section */}
       <section className="py-8 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-4">
@@ -63,7 +78,7 @@ export default async function Home() {
               <img
                 src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=600&h=400&fit=crop"
                 alt="Women's Collection"
-                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                 <div className="text-center text-white">
@@ -76,7 +91,7 @@ export default async function Home() {
               <img
                 src="https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?w=600&h=400&fit=crop"
                 alt="Men's Collection"
-                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                 <div className="text-center text-white">
@@ -89,7 +104,7 @@ export default async function Home() {
               <img
                 src="https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=600&h=400&fit=crop"
                 alt="Accessories"
-                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                 <div className="text-center text-white">
@@ -102,6 +117,7 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* Features Section */}
       <section className="py-12 border-y border-gray-200">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
@@ -145,6 +161,7 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* Featured Products Section - GUNAKAN CLIENT COMPONENT */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
@@ -160,42 +177,12 @@ export default async function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {data.slice(0, 8).map(product => (
-              <Link
-                key={product.slug}
-                href={`/products/${product.slug}`}
-                className="group"
-              >
-                <div className="relative aspect-square mb-4 overflow-hidden bg-gray-100">
-                  <img
-                    src={product.thumbnail}
-                    alt={product.name}
-                    className="object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                  <div className="absolute top-3 left-3 px-3 py-1 bg-black text-white text-xs font-semibold uppercase">
-                    {product.tags}
-                  </div>
-                  <button className="absolute top-3 right-3 w-10 h-10 bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg hover:bg-black hover:text-white">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                  </button>
-                </div>
-                <h3 className="font-semibold text-sm mb-1 line-clamp-2 group-hover:underline">
-                  {product.name}
-                </h3>
-                <p className="text-xs text-gray-600 mb-2 line-clamp-1">
-                  {product.excerpt}
-                </p>
-                <p className="font-bold text-lg">{formatPrice(product.price)}</p>
-              </Link>
-            ))}
-          </div>
+          {/* GANTI DENGAN INI - Gunakan FeaturedProducts Client Component */}
+          <FeaturedProducts products={data.slice(0, 8)} />
         </div>
       </section>
-
     </div>
-
   );
 }
+
+import FeaturedProducts from '@/components/ProductList';
