@@ -14,7 +14,7 @@ export default function HomeLayout(props: IProps) {
 
                     <div className="flex items-center justify-between h-16">
                         <Link href="/" className="text-2xl font-bold tracking-widest">
-                            ZALORKUY
+                            AROLAZ
                         </Link>
                         <div className="flex items-center space-x-5">
                             <User className="w-5 h-5 cursor-pointer hover:text-gray-600 transition" />

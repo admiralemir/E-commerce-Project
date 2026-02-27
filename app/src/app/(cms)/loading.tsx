@@ -6,7 +6,7 @@ const LoadingOverlay: React.FC = () => {
       <div className="flex flex-col items-center space-y-6">
         
         <h1 className="text-2xl font-bold tracking-widest text-black animate-pulse">
-          ZALORA
+          AROLAZ
         </h1>
 
         <div className="relative w-40 h-[2px] bg-gray-200 overflow-hidden">
